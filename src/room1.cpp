@@ -63,24 +63,31 @@ void redwall() {
     drawPolygon({-0.98, 0.25, 0.0, -0.98, 0.0, 0.0, -0.98, 0.0, 0.05, -0.98, 0.25, 0.05}, black);
 
     //-------------black drawer---------
-    drawCube((GLfloat[]){0.0f, 0.0f, 0.0f}, -0.95f, 0.06f, 0.8f, 1.1f, 0.4f, 1.5f);
-    drawCube((GLfloat[]){1.0f, 0.0f, 0.0f}, -0.92f, 0.06f, 0.8f, 0.56f, 0.15f, 1.45f);
+    GLfloat blackDrawerColor [] = {0.0f, 0.0f, 0.0f}; 
+    drawCube(blackDrawerColor, -0.95f, 0.06f, 0.8f, 1.1f, 0.4f, 1.5f);
+    blackDrawerColor[0] = 1.0f;
+    drawCube(blackDrawerColor, -0.92f, 0.06f, 0.8f, 0.56f, 0.15f, 1.45f);
 
     //---------bed(1st layer)------------
-    drawCube((GLfloat[]){0.15f, 0.11f, 0.11f}, -0.7f, 0.01f, 0.36f, 6.0f, 0.25f, 5.0f);
+    GLfloat bed1stColor [] = {0.15f, 0.11f, 0.11f};
+    drawCube(bed1stColor, -0.7f, 0.01f, 0.36f, 6.0f, 0.25f, 5.0f);
     
     //----------2nd layer)---------------
-    drawCube((GLfloat[]){0.17f, 0.13f, 0.12f}, -0.7f, 0.04f, 0.36f, 6.0f, 0.3f, 5.2f);
+    GLfloat layer2ndColor [] = {0.17f, 0.13f, 0.12f};
+    drawCube(layer2ndColor, -0.7f, 0.04f, 0.36f, 6.0f, 0.3f, 5.2f);
     
     //----------bed-----------
-    drawCube((GLfloat[]){0.84f, 0.72f, 0.69f}, -0.7f, 0.065f, 0.36f, 5.9f, 0.3f, 5.1f);
+    GLfloat bedColor [] = {0.84f, 0.72f, 0.69f};
+    drawCube(bedColor, -0.7f, 0.065f, 0.36f, 5.9f, 0.3f, 5.1f);
     
     //--------------bedsheet----------------
-    drawCube((GLfloat[]){0.86f, 0.52f, 0.55f}, -0.5f, 0.069f, 0.36f, 2.5f, 0.3f, 5.2f);
+    GLfloat bedsheetColor [] = {0.86f, 0.52f, 0.55f};
+    drawCube(bedsheetColor, -0.5f, 0.069f, 0.36f, 2.5f, 0.3f, 5.2f);
 
     //--------------pillow---------------
-    drawCube((GLfloat[]){0.86f, 0.52f, 0.55f}, -0.9f, 0.1f, 0.5f, 1.0f, 0.2f, 1.5f);
-    drawCube((GLfloat[]){0.86f, 0.52f, 0.55f}, -0.9f, 0.1f, 0.25f, 1.0f, 0.2f, 1.5f);
+    GLfloat pillowColor [] = {0.86f, 0.52f, 0.55f};
+    drawCube(pillowColor, -0.9f, 0.1f, 0.5f, 1.0f, 0.2f, 1.5f);
+    drawCube(pillowColor, -0.9f, 0.1f, 0.25f, 1.0f, 0.2f, 1.5f);
 
     //-------light-------
     GLfloat lightColor[] = {1.0f, 1.0f, 1.0f};
