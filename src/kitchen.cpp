@@ -1,20 +1,31 @@
 #include "kitchen.h"
+#include <iostream>
+#include <vector>
 #include <GL/glut.h>
 #include "functionsAux.h"
 
+//funcao que desenha qualquer cubo na cozinha
 void drawCubeKitchen(float x, float y, float z, float sx, float sy, float sz, const float color[3]) {
-    GLfloat matSpecular [] = {color[0], color[1], color[2]};
-    GLfloat shininess[] = {128.0f};
-    
+
+    //definindo aspectos de reflexao do material 
+    GLfloat matSpecular [] = {color[0], color[1], color[2]}; 
+    GLfloat shininess[] = {128.0f};       
     glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);  
+
+    //essa funcao calcula os vertices de um cubo a partir de uma coordenada central
     std::vector<std::array<GLfloat, 3>> vertices= FunctionAux::calculateCubeFaceVertices(0.1, x, y, z,sx, sy, sz);
+
+    //passando pra outra variavel os vertices do cubo da cozinha conseguidos anteriormente
     GLfloat verticeA [3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
     GLfloat verticeB [3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
     GLfloat verticeC [3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
     GLfloat verticeD [3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
+
+    //calculando a normal para a iluminação
     GLfloat normal [3];
     FunctionAux::calculateFlatNormal(verticeA, verticeB, verticeC, verticeD, normal);
+
     glColor3f(color[0], color[1], color[2]);
     glPushMatrix();
     glTranslatef(x, y, z);
@@ -24,14 +35,20 @@ void drawCubeKitchen(float x, float y, float z, float sx, float sy, float sz, co
     glPopMatrix();
 }
 
-void drawPolygonKitchen(const float color[3], const float vertices[][3], int vertexCount) {
+void drawPolygonKitchen(const float color[3], const float vertices[][3], int vertexCount) {  
+
+    //definindo aspectos de reflexao do material 
     glColor3f(color[0], color[1], color[2]);
     GLfloat matSpecular [] = {color[0], color[1], color[2]};
     GLfloat shininess[] = {128.0f};
     glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+
+    //calculando a normal
     GLfloat normal [3];
     FunctionAux::calculateFlatNormal(vertices[0], vertices[1], vertices[2], vertices[3],normal);
+
+    //desenha qualquer poligono de acordo com a qtd e posicao dos vertices que é passado na funcao
     glBegin(GL_POLYGON);
     glNormal3f(normal[0], normal[1], normal[2]);
     for (int i = 0; i < vertexCount; ++i) {
@@ -40,7 +57,7 @@ void drawPolygonKitchen(const float color[3], const float vertices[][3], int ver
     glEnd();
 }
 
-
+//desenhando o movel da cozinha
 void drawKitchenCabinet() {
     const float colorDarkGray[] = {0.22f, 0.22f, 0.22f};
     const float colorLightBrown[] = {0.85f, 0.69f, 0.35f};
@@ -127,7 +144,7 @@ void drawHandles() {
     drawCubeKitchen(-1.63f, 0.19f, 1.671f, 0.15f, 0.5f, 0.05f, colorHandle);
 }
 
-
+//desenhando o forno
 void drawOven() {
     const float gray[3] = {0.58f, 0.58f, 0.58f};
     const float darkGray[3] = {0.058f, 0.058f, 0.058f};
@@ -283,7 +300,7 @@ void kitchenBase() {
     }
 }
 
-
+//desenha a cozinha como um todo
 void drawKitchen() {
   
   glEnable(GL_LIGHT3);

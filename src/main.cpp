@@ -10,6 +10,14 @@
 #include <iostream>
 
 
+#define MIN_X -2.5 //constantes minima para o valor da coordenada X
+#define MAX_X 0.8  //constantes maxima para o valor da coordenada X
+#define MIN_Y 0.1 //constantes minima para o valor da coordenada Y
+#define MAX_Y 0.5  //constantes maximas para o valor da coordenada Y
+#define MIN_Z -0.5 //constantes minima para o valor da coordenada Z
+#define MAX_Z 5.0 //constantes maximas para o valor da coordenada Z
+
+
 GLfloat doorPositionX = 0.0, doorPositionZ = 0.0;
 int isDoorClosed = 1;
 float lookAtX = 0.0f, lookAtZ = -1.0f, rotationAngle = 0.0f;
@@ -147,22 +155,37 @@ void handleKeyPress(unsigned char key, int x, int y) {
             viewerPosition[0] += lookAtX * 0.1;
             viewerPosition[2] += lookAtZ * 0.1;
             break;
+
         case 's':  // Backward
             viewerPosition[0] -= lookAtX * 0.1;
             viewerPosition[2] -= lookAtZ * 0.1;
             break;
+
         case 'a':  // Left
             viewerPosition[0] -= cos(rotationAngle) * 0.01;
             viewerPosition[2] += sin(rotationAngle) * 0.01;
             break;
+
         case 'd':  // Right
             viewerPosition[0] += cos(rotationAngle) * 0.01;
             viewerPosition[2] -= sin(rotationAngle) * 0.01;
             break;
+
         case 'o':  // Open the door
-            
             openDoor(0);
             break;
+    }
+    if(viewerPosition[2]  <= MIN_Z){     //se a nova posição for maior que o limite de Z então redefinimos com o valor pro limite
+        viewerPosition[2] = MIN_Z;
+    }
+    if(viewerPosition[2] >= MAX_Z){     //se a nova posição for maior que o limite de Z então redefinimos com o valor pro limite (colisao)
+        viewerPosition[2] = MAX_Z;
+    }
+    if(viewerPosition[0] <= MIN_X){ 
+        viewerPosition[0] = MIN_X;
+    }
+    if(viewerPosition[0] >= MAX_X){     //se a nova posição for maior que o limite superior de X então redefinimos com o valor pro limite
+        viewerPosition[0] = MAX_X;
     }
     glutPostRedisplay();
 }
@@ -178,18 +201,25 @@ void handleSpecialKeyPress(int key, int x, int y) {
             rotationAngle += rotationSpeed;
             break;
 
-        case GLUT_KEY_PAGE_UP: // Move up
+        case GLUT_KEY_UP: // Move up
             viewerPosition[1] += 0.1;
+
+            if(viewerPosition[1] >= MAX_Y){     //implementando colisao no sentido Y
+            	viewerPosition[1] = MAX_Y;
+            }
             break;
-        case GLUT_KEY_PAGE_DOWN: // Move down
+        case GLUT_KEY_DOWN: // Move down
             viewerPosition[1] -= 0.1;
+
+            if(viewerPosition[1] <= MIN_Y){     //implementando colisao no sentido Y
+            	viewerPosition[1] = MIN_Y;
+            }
             break;
     }
 
     // Update the look direction based on the new rotation angle
     lookAtX = sin(rotationAngle);
     lookAtZ = -cos(rotationAngle);
-
 
     glutPostRedisplay();
 }

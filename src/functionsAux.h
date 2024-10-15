@@ -8,6 +8,7 @@
 #include <array>
 #include <algorithm>
 #include <iostream>
+#include <vector>
 
 /* Classe com funções auxiliares para cálculos de centro e normal de poligonos */
 class FunctionAux{

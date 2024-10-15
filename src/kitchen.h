@@ -1,6 +1,6 @@
 #ifndef KITCHEN_H
 #define KITCHEN_H
 
-    void drawKitchen();
+    void drawKitchen();   //funcao principal (desenha o comodo da cozinha todo)
 
 #endif
