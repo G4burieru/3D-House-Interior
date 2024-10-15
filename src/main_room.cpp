@@ -1,17 +1,41 @@
 #include "main_room.h"
 #include <GL/glut.h>
+#include "functionsAux.h"
 
 void drawCubeMainRoom(float x, float y, float z, float scaleX, float scaleY, float scaleZ, const float* color) {
+    
+    GLfloat matSpecular [] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat shininess[] = {128.0f};
+    
+    glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+    std::vector<std::array<GLfloat, 3>> vertices= FunctionAux::calculateCubeFaceVertices(0.1, x, y, z, scaleX, scaleY, scaleZ);
+    GLfloat normal[3];
+    GLfloat verticeA [3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
+    GLfloat verticeB [3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
+    GLfloat verticeC [3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
+    GLfloat verticeD [3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
+    FunctionAux::calculateFlatNormal(verticeA, verticeB, verticeC, verticeD, normal);
     glColor3fv(color);
     glPushMatrix();
     glTranslatef(x, y, z);
     glScalef(scaleX, scaleY, scaleZ);
+    glNormal3f(normal[0], normal[1], normal[2]);
     glutSolidCube(0.1f);
     glPopMatrix();
 }
 
-void drawPolygonMainRoom(GLfloat vertices[4][3]) {
+void drawPolygonMainRoom(GLfloat vertices[4][3], GLfloat color[3]) {
+  
+    GLfloat matSpecular [] = {1.f, 1.f, 1.f, 1.f};
+    GLfloat shininess[] = {32.0f};
+    GLfloat normal[3];
+    glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+    FunctionAux::calculateNormal(vertices[0], vertices[1], vertices[3], normal);
+    
     glBegin(GL_POLYGON);
+    glNormal3f(normal[0], normal[1], normal[2]);
     for (int i = 0; i < 4; i++) {
         glVertex3f(vertices[i][0], vertices[i][1], vertices[i][2]);
     }
@@ -96,6 +120,7 @@ void msofa() {
 
 
 void mainRoomPainting() {
+    
     // Definir cores
     const float white[] = {0.95f, 0.95f, 0.95f};
     const float red[] = {0.53f, 0.12f, 0.12f};
@@ -142,23 +167,27 @@ void mainRoomPainting() {
 void mainRoomBase() {
     // Cyan walls
     glColor3f(0.5f, 0.8f, 0.85f);
+    GLfloat color [] = {0.5f, 0.8f, 0.85f};
     GLfloat rightWall[4][3] = {
         {0.985f, 0.5f, 1.0f},
         {0.985f, 0.5f, 4.6f},
         {0.985f, 0.0f, 4.6f},
         {0.985f, 0.0f, 1.0f}
     };
-    drawPolygonMainRoom(rightWall);
+    drawPolygonMainRoom(rightWall, color);
 
     // Floor base
     glColor3f(0.85f, 0.8f, 0.85f);
+    color[0] = 0.85f;
+    color[1] = 0.8f;
+    color[2] = 0.85f;
     GLfloat lowerFloor[4][3] = {
         {-1.0f, 0.0f, 1.0f},
         {1.0f, 0.0f, 1.0f},
         {1.0f, 0.0f, 3.0f},
         {-1.0f, 0.0f, 3.0f}
     };
-    drawPolygonMainRoom(lowerFloor);
+    drawPolygonMainRoom(lowerFloor, color);
 
     GLfloat upperFloor[4][3] = {
         {-1.0f, 0.5f, 1.0f},
@@ -166,17 +195,20 @@ void mainRoomBase() {
         {1.0f, 0.5f, 3.0f},
         {-1.0f, 0.5f, 3.0f}
     };
-    drawPolygonMainRoom(upperFloor);
+    drawPolygonMainRoom(upperFloor, color);
 
     // White wall sections
     glColor3f(0.9f, 0.9f, 0.9f);
+    color[0] = 0.9f;
+    color[1] = 0.9f;
+    color[2] = 0.9f;
     GLfloat upperWall[4][3] = {
         {1.0f, 0.5f, 1.01f},
         {1.0f, 0.27f, 1.01f},
         {-1.0f, 0.27f, 1.01f},
         {-1.0f, 0.5f, 1.01f}
     };
-    drawPolygonMainRoom(upperWall);
+    drawPolygonMainRoom(upperWall, color);
 
     GLfloat leftWall[4][3] = {
         {0.2f, 0.0f, 1.01f},
@@ -184,7 +216,7 @@ void mainRoomBase() {
         {-1.0f, 0.27f, 1.01f},
         {-1.0f, 0.0f, 1.01f}
     };
-    drawPolygonMainRoom(leftWall);
+    drawPolygonMainRoom(leftWall, color);
 
     GLfloat rightWall2[4][3] = {
         {0.4f, 0.0f, 1.01f},
@@ -192,27 +224,33 @@ void mainRoomBase() {
         {1.0f, 0.27f, 1.01f},
         {1.0f, 0.0f, 1.01f}
     };
-    drawPolygonMainRoom(rightWall2);
+    drawPolygonMainRoom(rightWall2, color);
 
     // Black background section
     glColor3f(0.09f, 0.09f, 0.09f);
+    color[0] = 0.09f;
+    color[1] = 0.09f;
+    color[2] = 0.09f;
     GLfloat blackBackground[4][3] = {
         {-0.2f, 0.0f, 1.011f},
         {-0.2f, 0.5f, 1.011f},
         {-0.9f, 0.5f, 1.011f},
         {-0.9f, 0.0f, 1.011f}
     };
-    drawPolygonMainRoom(blackBackground);
+    drawPolygonMainRoom(blackBackground, color);
 
     // Entrance section
     glColor3f(0.95f, 0.95f, 0.95f);
+    color[0] = 0.95f;
+    color[1] = 0.95f;
+    color[2] = 0.95f;
     GLfloat entranceLeft[4][3] = {
         {-0.7f, 0.0f, 3.0f},
         {-1.0f, 0.0f, 3.0f},
         {-1.0f, 0.5f, 3.0f},
         {-0.7f, 0.5f, 3.0f}
     };
-    drawPolygonMainRoom(entranceLeft);
+    drawPolygonMainRoom(entranceLeft, color);
 
     GLfloat entranceRight[4][3] = {
         {-0.4f, 0.0f, 3.0f},
@@ -220,7 +258,7 @@ void mainRoomBase() {
         {1.0f, 0.5f, 3.0f},
         {-0.4f, 0.5f, 3.0f}
     };
-    drawPolygonMainRoom(entranceRight);
+    drawPolygonMainRoom(entranceRight, color);
 
     GLfloat entranceTop[4][3] = {
         {-0.7f, 0.3f, 3.0f},
@@ -228,7 +266,7 @@ void mainRoomBase() {
         {-0.4f, 0.5f, 3.0f},
         {-0.7f, 0.5f, 3.0f}
     };
-    drawPolygonMainRoom(entranceTop);
+    drawPolygonMainRoom(entranceTop, color);
 }
 
 
@@ -252,6 +290,19 @@ void mainRoomTop() {
 
 
 void drawMainRoom() {
+  
+  glEnable(GL_LIGHT1);
+  float light1[4][4] = {
+                {0.05f, 0.05f, 0.05f, 1.f}, //ambient
+                {0.08f, 0.08f, 0.08f, 1.f}, //diffuse
+                {0.01f, 0.01f, 0.01f, 1.f}, //specular
+                {0.0f, 0.488f, 1.9f, 1.f} //position
+                
+  };
+  glLightfv(GL_LIGHT1, GL_AMBIENT, &light1[0][0]);
+  glLightfv(GL_LIGHT1, GL_DIFFUSE, &light1[1][0]);
+  glLightfv(GL_LIGHT1, GL_SPECULAR, &light1[2][0]);
+  glLightfv(GL_LIGHT1, GL_POSITION, &light1[3][0]);
   
   mainRoomBase();
   mainRoomTop();

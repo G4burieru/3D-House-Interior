@@ -6,6 +6,9 @@
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
+#include "functionsAux.h"
+#include <iostream>
+
 
 GLfloat doorPositionX = 0.0, doorPositionZ = 0.0;
 int isDoorClosed = 1;
@@ -54,16 +57,43 @@ void displayText() {
     }
 }
 
+
 void drawOuterCover() {
-    glColor3f(0.095, 0.095, 0.095);
+    glColor3f( 196.0f / 255.0f, 160.0f/255.0f, 112.0f/255.0f);
+    GLfloat matSpecular [] = {1.f, 1.f, 1.f, 1.f};
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+    GLfloat shininess[] = {128.0f};
+    glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+
+
+    GLfloat normal[3];
     glBegin(GL_POLYGON);
-    glVertex3f(-1, 0.0, 3);
-    glVertex3f(-1, 0.5, 3);
+
+    /* Calculando as normais */
+    /* Estamos fazendo aqui sempre V1 - V0 e V3-V0
+     * depois fazendo o produto */
+    
+    GLfloat v0 [] = {-1, 0.0, 3};
+    GLfloat v1 [] = {-1, 0.5, 3};
+    GLfloat v3 [] = {-1, 0.0, 4};
+    GLfloat vv [] = {-1,0.5, 4};
+    FunctionAux::calculateFlatNormal(v0, v1, v3, vv, normal);
+    
+    glNormal3f(normal[0], normal[1], normal[2]);
+    glVertex3f(v0[0], v0[1], v0[2]);
+    glVertex3f(v1[0], v1[1], v1[2]);
     glVertex3f(-1, 0.5, 4);
-    glVertex3f(-1, 0.0, 4);
+    glVertex3f(v3[0], v3[1], v3[2]);
     glEnd();
 
     glBegin(GL_POLYGON);
+    
+    GLfloat v4 [] = {-3, 0.52, 3};
+    GLfloat v5 [] = {-3, 0.52, -1};
+    GLfloat v6 [] = {3, 0.52, 3};
+    GLfloat vv1 [] = {3, 0.52, -1};
+    FunctionAux::calculateFlatNormal(v4, v5,v6,vv1, normal);
+    glNormal3f(normal[0], normal[1], normal[2]);
     glVertex3f(-3, 0.52, 3);
     glVertex3f(-3, 0.52, -1);
     glVertex3f(3, 0.52, -1);
@@ -71,6 +101,13 @@ void drawOuterCover() {
     glEnd();
 
     glBegin(GL_POLYGON);
+   
+    GLfloat v7 [] = {-3, -0.02, 2.5};
+    GLfloat v8 [] = {-3, -0.02, -1};
+    GLfloat v9 [] = {3, -0.02, 2.5};
+    GLfloat vv2 [] = {3, -0.02, -1};
+    FunctionAux::calculateFlatNormal(v7, v8, v9, vv2,normal);
+    glNormal3f(normal[0], normal[1], normal[2]);
     glVertex3f(-3, -0.02, 2.5);
     glVertex3f(-3, -0.02, -1);
     glVertex3f(3, -0.02, -1);
@@ -86,7 +123,7 @@ void renderScene() {
     gluLookAt(viewerPosition[0], viewerPosition[1], viewerPosition[2], 
               viewerPosition[0] + lookAtX, lookAtPosition[1], 
               viewerPosition[2] + lookAtZ, 0.0, 1.0, 0.0);
-    
+
     glPushMatrix();
     glTranslatef(0.0, 0.2, 3.2);
     glScalef(0.5, 0.5, 0.0);
@@ -123,6 +160,7 @@ void handleKeyPress(unsigned char key, int x, int y) {
             viewerPosition[2] -= sin(rotationAngle) * 0.01;
             break;
         case 'o':  // Open the door
+            
             openDoor(0);
             break;
     }
@@ -175,7 +213,18 @@ int main(int argc, char **argv) {
     glutInitWindowSize(1000, 800);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("3D House Architecture");
-
+    
+    /* Definição de iluminação */
+    glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHT0);
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    float globalAmb [] = {0.5f, 0.5f, 0.5f, 1.f};
+    
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmb);
+   
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glutDisplayFunc(renderScene);

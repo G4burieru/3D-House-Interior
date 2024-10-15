@@ -1,18 +1,36 @@
 #include "kitchen.h"
 #include <GL/glut.h>
+#include "functionsAux.h"
 
 void drawCubeKitchen(float x, float y, float z, float sx, float sy, float sz, const float color[3]) {
+    GLfloat matSpecular [] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat shininess[] = {128.0f};
+    
+    glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+    std::vector<std::array<GLfloat, 3>> vertices= FunctionAux::calculateCubeFaceVertices(0.1, x, y, z,sx, sy, sz);
+    GLfloat verticeA [3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
+    GLfloat verticeB [3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
+    GLfloat verticeC [3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
+    GLfloat verticeD [3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
+    GLfloat normal [3];
+    FunctionAux::calculateFlatNormal(verticeA, verticeB, verticeC, verticeD, normal);
     glColor3f(color[0], color[1], color[2]);
     glPushMatrix();
     glTranslatef(x, y, z);
     glScalef(sx, sy, sz);
+    glNormal3f(normal[0], normal[1], normal[2]);
     glutSolidCube(0.1f);
     glPopMatrix();
 }
 
 void drawPolygonKitchen(const float color[3], const float vertices[][3], int vertexCount) {
     glColor3f(color[0], color[1], color[2]);
+
+    GLfloat normal [3];
+    FunctionAux::calculateFlatNormal(vertices[0], vertices[1], vertices[2], vertices[3],normal);
     glBegin(GL_POLYGON);
+    glNormal3f(normal[0], normal[1], normal[2]);
     for (int i = 0; i < vertexCount; ++i) {
         glVertex3f(vertices[i][0], vertices[i][1], vertices[i][2]);
     }
@@ -136,6 +154,7 @@ void drawCabinetChair() {
   glPushMatrix();
   glTranslatef(-1.8, 0.13, 2.63);
   glRotatef(90, 1, 0, 0);
+
   gluCylinder(quadratic, 0.01, 0.005, 0.125, 100, 100);
   glPopMatrix();
 
@@ -184,6 +203,7 @@ void kitchenBase() {
         {-3, 0.0, 1.5},
         {-1, 0.0, 1.5}
     };
+    
     drawPolygonKitchen(brown, vertices1, 4);
 
     // Second polygon
@@ -263,6 +283,23 @@ void kitchenBase() {
 
 void drawKitchen() {
   
+  glEnable(GL_LIGHT3);
+  float light3[4][4] = {
+                {0.05f, 0.05f, 0.05f, 1.f}, //ambient
+                {0.08f, 0.08f, 0.08f, 1.f}, //diffuse
+                {0.01f, 0.01f, 0.01f, 1.f}, //specular
+                {-1.8, 0.13, 2.63, 1.f} //position
+                
+  };
+  glLightfv(GL_LIGHT3, GL_AMBIENT, &light3[0][0]);
+  glLightfv(GL_LIGHT3, GL_DIFFUSE, &light3[1][0]);
+  glLightfv(GL_LIGHT3, GL_SPECULAR, &light3[2][0]);
+  glLightfv(GL_LIGHT3, GL_POSITION, &light3[3][0]);
+  GLfloat matSpecular [] = {1.f, 1.f, 1.f, 1.f};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+  GLfloat shininess[] = {128.0f};
+  glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+
   kitchenBase();
   
   glPushMatrix();
