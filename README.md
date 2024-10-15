@@ -23,3 +23,16 @@ To execute the program:
 ```bash
 ./main
 ```
+
+## Controls
+
+- **Movement**: Use the **WASD** keys to move:
+  - **W**: Forward
+  - **A**: Left
+  - **S**: Backward
+  - **D**: Right
+- **Camera Movement**: Use the arrow keys to move the camera.
+
+![Main_Room](imgs/bedroom_pic.png)
+![Bedroom](main_room_pic.png)
+
