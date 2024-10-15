@@ -26,8 +26,8 @@ void lines() {
 }
 
 void drawPolygon(const std::vector<GLfloat>& vertices, const GLfloat* color) {
-    GLfloat matSpecular [] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat shininess[] = {16.0f};
+    GLfloat matSpecular [] = {color[0], color[1], color[2], 1.0f};
+    GLfloat shininess[] = {1.0f};
     
     glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
@@ -40,8 +40,8 @@ void drawPolygon(const std::vector<GLfloat>& vertices, const GLfloat* color) {
 }
 
 void drawCube(const GLfloat* color, float x, float y, float z, float scaleX, float scaleY, float scaleZ) {
-    GLfloat matSpecular [] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat shininess[] = {16.0f};
+    GLfloat matSpecular [] = {color[0], color[1], color[2], 1.0f};
+    GLfloat shininess[] = {1.0f};
     
     glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
@@ -566,7 +566,7 @@ void drawRoom1() {
   
   glEnable(GL_LIGHT2);
   float light2[4][4] = {
-                {0.05f, 0.05f, 0.05f, 1.f}, //ambient
+                {0.1f, 0.1f, 0.1f, 1.f}, //ambient
                 {0.08f, 0.08f, 0.08f, 1.f}, //diffuse
                 {0.01f, 0.01f, 0.01f, 1.f}, //specular
                 {-0.2, 0.5, 0.0, 1.f} //position
@@ -576,13 +576,15 @@ void drawRoom1() {
   glLightfv(GL_LIGHT2, GL_DIFFUSE, &light2[1][0]);
   glLightfv(GL_LIGHT2, GL_SPECULAR, &light2[2][0]);
   glLightfv(GL_LIGHT2, GL_POSITION, &light2[3][0]);
-  GLfloat matSpecular [] = {1.f, 1.f, 1.f, 1.f};
-  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+
   GLfloat shininess[] = {128.0f};
   glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
   GLfloat normal[3];
   //--------------floor-----------------
   glColor3f(0.85, 0.85, 0.85);
+ 
+  GLfloat matSpecular [] = {0.85f, 0.85f, 0.85f};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
   glBegin(GL_POLYGON);
   GLfloat v0 [] = {1, 0.0, -1};
   GLfloat v1 [] = {1, 0.0, 1};
@@ -601,6 +603,8 @@ void drawRoom1() {
   //--------wall(back)grey1----------------
   // glColor3f(0.54, 0.54, 0.52);
   glColor3f(0.69, 0.58, 0.56);
+  GLfloat matSpecularWallBack [] = {0.69f, 0.58f, 0.56f};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecularWallBack);
   glBegin(GL_POLYGON);
   GLfloat v4 [] = {1, 0.5, -1};
   GLfloat v5 [] = {1, 0.0, -1};
@@ -616,6 +620,8 @@ void drawRoom1() {
 
   //----------wall(right)------
   glColor3f(0.69, 0.58, 0.56);
+  GLfloat matSpecularWallRight [] = {0.69f, 0.58f, 0.56f};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecularWallRight);
   glBegin(GL_POLYGON);
   GLfloat v7 [] = {1, 0.5, -1};
   GLfloat v8 [] = {1, 0.0, -1};
@@ -631,6 +637,8 @@ void drawRoom1() {
 
   //----------wall(left)red------
   glColor3f(1.0, 0.0, 0.0);
+  GLfloat matSpecularWallLeft [] = {1.0f, 0.f, 0.f};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecularWallLeft);
   glBegin(GL_POLYGON);
   GLfloat v10 [] = {-1, 0.5, -1};
   GLfloat v11 [] = {1, 0.0, -1};
@@ -646,6 +654,8 @@ void drawRoom1() {
 
   //----------roof------
   glColor3f(0.80, 0.60, 0.58);
+   GLfloat matSpecularRoof [] = {0.80, 0.60, 0.58};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecularRoof);
   glBegin(GL_POLYGON);
   GLfloat v13 [] = {-1, 0.5, -1};
   GLfloat v14 [] = {-1, 0.5, 1};
@@ -661,6 +671,8 @@ void drawRoom1() {
 
   //--------wall(back)grey1----------------
   glColor3f(0.69, 0.58, 0.56);
+  GLfloat matSpecularWallBackG [] = {0.69, 0.58, 0.56};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecularWallBackG);
   glBegin(GL_POLYGON);
   GLfloat v16 [] = {1, 0.5, 1};
   GLfloat v17 [] = {1, 0.27, 1};
@@ -701,26 +713,48 @@ void drawRoom1() {
   glVertex3f(1, 0.27, 1);
   glVertex3f(1, 0.0, 1);
   glEnd();
+
   //----------------door main-------------
   glColor3f(0.01, 0.012, 0.012);
+  GLfloat matSpeculardoorMain[] = {0.01, 0.012, 0.012};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpeculardoorMain);
   glPushMatrix();
+  std::vector<std::array<GLfloat, 3>> vertices= FunctionAux::calculateCubeFaceVertices(0.1, 0.15, 0.135, 1.055,1.5, 2.7, 0.1);
+  GLfloat verticeA2 [3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
+  GLfloat verticeB2 [3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
+  GLfloat verticeC2 [3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
+  GLfloat verticeD2 [3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
+  FunctionAux::calculateFlatNormal(verticeA2, verticeB2, verticeC2, verticeD2, normal);
   glTranslatef(0.15, 0.135, 1.055);
   glRotatef(45, 0, 1, 0);
   glScalef(1.5, 2.7, 0.1);
+  glNormal3f(normal[0], normal[1], normal[2]);
   glutSolidCube(0.1);
   glPopMatrix();
 
   glColor3f(0.901, 0.9012, 0.9012);
+  GLfloat matSpeculardoorMain1[] = {0.901, 0.9012, 0.9012};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpeculardoorMain1);
   glPushMatrix();
+  vertices= FunctionAux::calculateCubeFaceVertices(0.1, 0.15, 0.135, 1.055,1.2, 2.2, 0.11);
+  GLfloat verticeA1 [3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
+  GLfloat verticeB1 [3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
+  GLfloat verticeC1 [3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
+  GLfloat verticeD1 [3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
+  
+  FunctionAux::calculateFlatNormal(verticeA1, verticeB1, verticeC1, verticeD1, normal);
   glTranslatef(0.15, 0.135, 1.055);
   glRotatef(45, 0, 1, 0);
   glScalef(1.2, 2.2, 0.11);
+  glNormal3f(normal[0], normal[1], normal[2]);
   glutSolidCube(0.1);
   glPopMatrix();
 
   //--border------
 
   glColor3f(0.38, 0.27, 0.19);
+  GLfloat matSpeculardoorBorder[] = {0.38, 0.27, 0.19};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpeculardoorBorder);
   glBegin(GL_POLYGON);
   GLfloat v25 [] = {0.4, 0.285, 1.0101};
   GLfloat v26 [] = {0.4, 0.27, 1.0101};
@@ -735,6 +769,7 @@ void drawRoom1() {
   glEnd();
 
   glColor3f(0.38, 0.27, 0.19);
+  
   glBegin(GL_POLYGON);
   GLfloat v28 [] = {0.395, 0.0, 1.0101};
   GLfloat v29 [] = {0.395, 0.285, 1.0101};
@@ -807,13 +842,15 @@ void drawRoom1() {
   glEnd();
 
   //-------------tv walll------
-  std::vector<std::array<GLfloat, 3>> vertices= FunctionAux::calculateCubeFaceVertices(0.1, 0.74, 0.25, 0.5, 5.1, 5, 9.99);
+  vertices= FunctionAux::calculateCubeFaceVertices(0.1, 0.74, 0.25, 0.5, 5.1, 5, 9.99);
   GLfloat verticeA [3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
   GLfloat verticeB [3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
   GLfloat verticeC [3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
   GLfloat verticeD [3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
   FunctionAux::calculateFlatNormal(verticeA, verticeB, verticeC, verticeD, normal);
   glColor3f(0.53, 0.12, 0.12);
+  GLfloat matSpeculardoortvWall[] = {0.53, 0.12, 0.12};
+  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpeculardoortvWall);
   glPushMatrix();
   glTranslatef(0.74, 0.25, 0.5);
   glScalef(5.1, 5, 9.99);

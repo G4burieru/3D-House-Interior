@@ -4,9 +4,10 @@
 
 void drawCubeMainRoom(float x, float y, float z, float scaleX, float scaleY, float scaleZ, const float* color) {
     
-    GLfloat matSpecular [] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat shininess[] = {128.0f};
-    
+    /* Definição do matSpecular como sendo o branco e o shine como 1.0f*/
+    GLfloat matSpecular [] = {color[0], color[1], color[2]};
+    GLfloat shininess[] = {1.0f};
+    /* Chamada de funções para calcular a normal*/
     glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
     std::vector<std::array<GLfloat, 3>> vertices= FunctionAux::calculateCubeFaceVertices(0.1, x, y, z, scaleX, scaleY, scaleZ);
@@ -27,8 +28,9 @@ void drawCubeMainRoom(float x, float y, float z, float scaleX, float scaleY, flo
 
 void drawPolygonMainRoom(GLfloat vertices[4][3], GLfloat color[3]) {
   
-    GLfloat matSpecular [] = {1.f, 1.f, 1.f, 1.f};
-    GLfloat shininess[] = {32.0f};
+    /* Definição do matSpecular como sendo o color e o shine como 1.0f*/
+    GLfloat matSpecular [] = {color[0], color[1], color[2]};
+    GLfloat shininess[] = {1.0f};
     GLfloat normal[3];
     glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
@@ -293,7 +295,7 @@ void drawMainRoom() {
   
   glEnable(GL_LIGHT1);
   float light1[4][4] = {
-                {0.05f, 0.05f, 0.05f, 1.f}, //ambient
+                {0.1f, 0.1f, 0.1f, 1.f}, //ambient
                 {0.08f, 0.08f, 0.08f, 1.f}, //diffuse
                 {0.01f, 0.01f, 0.01f, 1.f}, //specular
                 {0.0f, 0.488f, 1.9f, 1.f} //position

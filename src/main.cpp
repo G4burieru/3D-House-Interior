@@ -216,13 +216,14 @@ int main(int argc, char **argv) {
     
     /* Definição de iluminação */
     glEnable(GL_LIGHTING);
-    //glEnable(GL_LIGHT0);
+    /* Inicializa para manter a cor do material*/
     glEnable(GL_COLOR_MATERIAL);
-    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    /* Aplica iluminação difusa e ambiente apenas na parte da frente e atrás do objeto*/
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
     
+    /* Definição da luz global ambiente para aumentar o brilho dos objetos por padrão*/
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
     float globalAmb [] = {0.5f, 0.5f, 0.5f, 1.f};
-    
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmb);
    
     glMatrixMode(GL_MODELVIEW);

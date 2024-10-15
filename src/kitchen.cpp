@@ -3,7 +3,7 @@
 #include "functionsAux.h"
 
 void drawCubeKitchen(float x, float y, float z, float sx, float sy, float sz, const float color[3]) {
-    GLfloat matSpecular [] = {1.0f, 1.0f, 1.0f, 1.0f};
+    GLfloat matSpecular [] = {color[0], color[1], color[2]};
     GLfloat shininess[] = {128.0f};
     
     glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
@@ -26,7 +26,10 @@ void drawCubeKitchen(float x, float y, float z, float sx, float sy, float sz, co
 
 void drawPolygonKitchen(const float color[3], const float vertices[][3], int vertexCount) {
     glColor3f(color[0], color[1], color[2]);
-
+    GLfloat matSpecular [] = {color[0], color[1], color[2]};
+    GLfloat shininess[] = {128.0f};
+    glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
     GLfloat normal [3];
     FunctionAux::calculateFlatNormal(vertices[0], vertices[1], vertices[2], vertices[3],normal);
     glBegin(GL_POLYGON);
