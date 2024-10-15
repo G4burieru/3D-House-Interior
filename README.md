@@ -33,6 +33,6 @@ To execute the program:
   - **D**: Right
 - **Camera Movement**: Use the arrow keys to move the camera.
 
-![Main_Room](imgs/bedroom_pic.png)
-![Bedroom](main_room_pic.png)
+![Bedroom](imgs/bedroom_pic.png)
+![Main_Room](imgs/main_room_pic.png)
 
