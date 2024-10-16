@@ -25,8 +25,7 @@ void drawCubeMainRoom(float x, float y, float z, float scaleX, float scaleY,
   GLfloat verticeD[3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
 
   // Calculate the normal for the cube's face
-  FunctionAux::calculateFlatNormal(verticeA, verticeB, verticeC, verticeD,
-                                   normal);
+FunctionAux::calculateFlatNormal(verticeA, verticeB, verticeC, verticeD, normal);
 
   glColor3fv(color);                           // Set cube color
   glPushMatrix();                              // Save current matrix state
@@ -75,11 +74,6 @@ void mainRoomTv() {
 
   // Shadow
   drawCubeMainRoom(0.97f, 0.2f, 1.73f, 0.001f, 4.0f, 7.0f, colorShadow);
-
-  // Lines
-  for (float y = 0.425f; y >= 0.125f; y -= 0.1f) {
-    drawCubeMainRoom(0.97f, y, 1.8f, 0.001f, 0.05f, 24.0f, colorLine);
-  }
 
   // TV
   drawCubeMainRoom(0.9596f, 0.2f, 1.73f, 0.1f, 1.5f, 3.0f, colorDark);

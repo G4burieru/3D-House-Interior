@@ -216,52 +216,43 @@ void kitchenBase() {
   const float brown[3] = {0.68f, 0.54f, 0.32f};
   const float lightGray[3] = {0.9f, 0.9f, 0.9f};
   const float gray[3] = {0.85f, 0.8f, 0.85f};
-  const float darkGray[3] = {0.75f, 0.80f, 0.46f};
+  const float blue[3] = {0.68f, 0.8f, 0.9f};
   const float black[3] = {0.0f, 0.0f, 0.0f};
   const float white[3] = {0.95f, 0.98f, 0.985f};
 
-  // First polygon
+    //definindo os vertices e desenhando o piso da cozinha 
   float vertices1[][3] = {
       {-1, 0.0, 3}, {-3, 0.0, 3}, {-3, 0.0, 1.5}, {-1, 0.0, 1.5}};
+  drawPolygonKitchen(brown, vertices1, 4);         
 
-  drawPolygonKitchen(brown, vertices1, 4);
-
-  // Second polygon
+  //definindo os vertices e desenhando paredes internas da cozinha
   float vertices2[][3] = {
       {-3, 0.0, 1.5}, {-1, 0.0, 1.5}, {-1, 0.5, 1.5}, {-3, 0.5, 1.5}};
   drawPolygonKitchen(lightGray, vertices2, 4);
-
-  // Third polygon
   float vertices3[][3] = {
       {-3, 0.0, 3}, {-1, 0.0, 3}, {-1, 0.5, 3}, {-3, 0.5, 3}};
   drawPolygonKitchen(lightGray, vertices3, 4);
-
-  // Fourth polygon
-  float vertices4[][3] = {
-      {-1, 0.5, 3}, {-3, 0.5, 3}, {-3, 0.5, 1.5}, {-1, 0.5, 1.5}};
-  drawPolygonKitchen(gray, vertices4, 4);
-
-  // Fifth polygon
   float vertices5[][3] = {
       {-3, 0.0, 1.5}, {-3, 0.5, 1.5}, {-3, 0.5, 3}, {-3, 0.0, 3}};
   drawPolygonKitchen(lightGray, vertices5, 4);
 
-  // Sixth polygon
+   //desenhando o teto
+  float vertices4[][3] = {
+      {-1, 0.5, 3}, {-3, 0.5, 3}, {-3, 0.5, 1.5}, {-1, 0.5, 1.5}};
+  drawPolygonKitchen(gray, vertices4, 4);
+
+   //desenha a parede da entrada da cozinha
   float vertices6[][3] = {
       {-1, 0.0, 1.5}, {-1, 0.5, 1.5}, {-1, 0.5, 1.85}, {-1, 0.0, 1.85}};
-  drawPolygonKitchen(darkGray, vertices6, 4);
-
-  // Seventh polygon
+  drawPolygonKitchen(blue, vertices6, 4);
   float vertices7[][3] = {
       {-1, 0.0, 1.5}, {-1, 0.5, 1.5}, {-1, 0.5, 0.85}, {-1, 0.0, 0.85}};
-  drawPolygonKitchen(black, vertices7, 4);
-
-  // Eighth polygon
+  drawPolygonKitchen(blue, vertices7, 4);
   float vertices8[][3] = {
       {-1, 0.35, 1.5}, {-1, 0.5, 1.5}, {-1, 0.5, 3}, {-1, 0.35, 3}};
-  drawPolygonKitchen(darkGray, vertices8, 4);
+  drawPolygonKitchen(blue, vertices8, 4);
 
-  // White detail on entrance wall
+  //detalhes brancos na parede de entrada
   glColor3f(white[0], white[1], white[2]);
   for (float yOffset = 0.14f; yOffset <= 0.4f; yOffset += 0.135f) {
     glPushMatrix();
@@ -272,7 +263,7 @@ void kitchenBase() {
   }
 }
 
-// Draw the kitchen
+//funcao principal que desenha todos os detalhes da cozinha
 void drawKitchen() {
 
   glEnable(GL_LIGHT3); // Enable light source 3

@@ -148,8 +148,7 @@ void renderScene() {
   displayText();
   glPopMatrix();
 
-  // Draw various parts of the house
-  drawOuterCover();
+  //chamando funcao que desenha as principais partes da casa: porta da frente, quarto, cozinha e sala de estar, respectivamente
   drawMainDoor();
   drawRoom1();
   drawKitchen();
@@ -158,12 +157,33 @@ void renderScene() {
   glutSwapBuffers(); // Swap buffers for double buffering
 }
 
+void checkCollisions(int &orgZ){
+
+  std::vector<std::vector<float>> wall_boundaries = {{3.7, 3}, {1.4, 0.6}};
+  std::vector<std::vector<float>> door = {{-0.85,-0.12}, {0.3, 0.1}};
+
+  // detecção de colisão para os limites de profundidade e de lateralidade da "casa"
+  if (viewerPosition[2] <= MIN_Z)
+    viewerPosition[2] = MIN_Z;
+  if (viewerPosition[2] >= MAX_Z)
+    viewerPosition[2] = MAX_Z;
+  if (viewerPosition[0] <= MIN_X)
+    viewerPosition[0] = MIN_X;
+  if (viewerPosition[0] >= MAX_X)
+    viewerPosition[0] = MAX_X;
+}
+
 void handleKeyPress(unsigned char key, int x, int y) {
   // User movement with W, A, S, D
+  int originalX = viewerPosition[0];
+  int originalZ = viewerPosition[2]; 
+
   switch (key) {
   case 'w': // Move forward
     viewerPosition[0] += lookAtX * 0.1;
     viewerPosition[2] += lookAtZ * 0.1;
+    std::cout << "x: " << viewerPosition[0] << std::endl;
+    std::cout << "z: " << viewerPosition[2] << std::endl;
     break;
 
   case 's': // Move backward
@@ -179,6 +199,8 @@ void handleKeyPress(unsigned char key, int x, int y) {
   case 'd': // Strafe right
     viewerPosition[0] += cos(rotationAngle) * 0.01;
     viewerPosition[2] -= sin(rotationAngle) * 0.01;
+    std::cout << "x: " << viewerPosition[0] << std::endl;
+    std::cout << "z: " << viewerPosition[2] << std::endl;
     break;
 
   case 'o': // Open the door
@@ -186,15 +208,7 @@ void handleKeyPress(unsigned char key, int x, int y) {
     break;
   }
 
-  // Collision detection for movement boundaries
-  if (viewerPosition[2] <= MIN_Z)
-    viewerPosition[2] = MIN_Z;
-  if (viewerPosition[2] >= MAX_Z)
-    viewerPosition[2] = MAX_Z;
-  if (viewerPosition[0] <= MIN_X)
-    viewerPosition[0] = MIN_X;
-  if (viewerPosition[0] >= MAX_X)
-    viewerPosition[0] = MAX_X;
+  checkCollisions(originalZ);
 
   glutPostRedisplay(); // Refresh the scene
 }

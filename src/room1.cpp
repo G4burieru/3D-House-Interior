@@ -569,141 +569,6 @@ void sofa() {
   glPopMatrix();
 }
 
-void box() {
-  GLfloat matSpecular[] = {1.0f, 1.0f, 1.0f, 1.0f};
-  GLfloat shininess[] = {16.0f};
-
-  glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
-
-  //----------TV -------------
-  glColor3f(0.18, 0.12, 0.13);
-  std::vector<std::array<GLfloat, 3>> vertices =
-      FunctionAux::calculateCubeFaceVertices(0.1, 0.46, 0.25, 0.5, 0.1, 1.5, 3);
-  GLfloat normal[3];
-  GLfloat tvA[3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
-  GLfloat tvB[3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
-  GLfloat tvC[3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
-  GLfloat tvD[3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
-  FunctionAux::calculateFlatNormal(tvA, tvB, tvC, tvD, normal);
-  glPushMatrix();
-  glTranslatef(0.46, 0.25, 0.5);
-  glScalef(0.1, 1.5, 3);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.1);
-  glPopMatrix();
-
-  glColor3f(0.0, 0.0, 0.0);
-  vertices = FunctionAux::calculateCubeFaceVertices(0.1, 0.47, 0.25, 0.5, 0.1,
-                                                    1.55, 3.3);
-  GLfloat tvA1[3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
-  GLfloat tvB1[3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
-  GLfloat tvC1[3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
-  GLfloat tvD1[3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
-  FunctionAux::calculateFlatNormal(tvA1, tvB1, tvC1, tvD1, normal);
-  glPushMatrix();
-  glTranslatef(0.47, 0.25, 0.5);
-  glScalef(0.1, 1.55, 3.3);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.1);
-  glPopMatrix();
-
-  //--------------table-----------
-
-  glColor3f(0.0, 0.0, 0.0);
-  vertices =
-      FunctionAux::calculateCubeFaceVertices(0.1, 0.46, 0.1, 0.5, 0.4, 0.4, 3);
-  GLfloat tableA[3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
-  GLfloat tableB[3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
-  GLfloat tableC[3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
-  GLfloat tableD[3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
-  FunctionAux::calculateFlatNormal(tableA, tableB, tableC, tableD, normal);
-  glPushMatrix();
-  glTranslatef(0.46, 0.1, 0.5);
-  glScalef(0.4, 0.4, 3);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.1);
-  glPopMatrix();
-
-  glColor3f(1.0, 0.0, 0.0);
-  vertices = FunctionAux::calculateCubeFaceVertices(0.1, 0.455, 0.1, 0.5, 0.41,
-                                                    0.2, 2.9);
-  GLfloat tableA1[3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
-  GLfloat tableB1[3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
-  GLfloat tableC1[3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
-  GLfloat tableD1[3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
-  FunctionAux::calculateFlatNormal(tableA1, tableB1, tableC1, tableD1, normal);
-  glPushMatrix();
-  glTranslatef(0.455, 0.1, 0.5);
-  glScalef(0.41, 0.2, 2.9);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.1);
-  glPopMatrix();
-
-  //-----------speaker-----------
-
-  glColor3f(0.0, 0.0, 0.0);
-  vertices = FunctionAux::calculateCubeFaceVertices(0.1, 0.47, 0.08, 0.2, 0.1,
-                                                    1.55, 0.7);
-  GLfloat speakerA[3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
-  GLfloat speakerB[3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
-  GLfloat speakerC[3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
-  GLfloat speakerD[3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
-  FunctionAux::calculateFlatNormal(speakerA, speakerB, speakerC, speakerD,
-                                   normal);
-  glPushMatrix();
-  glTranslatef(0.47, 0.08, 0.2);
-  glScalef(0.1, 1.55, 0.7);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.1);
-  glPopMatrix();
-
-  glColor3f(0.0, 0.0, 0.0);
-  glPushMatrix();
-  vertices = FunctionAux::calculateCubeFaceVertices(0.1, 0.47, 0.08, 0.8, 0.1,
-                                                    1.55, 0.7);
-  GLfloat speakerA1[3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
-  GLfloat speakerB1[3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
-  GLfloat speakerC1[3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
-  GLfloat speakerD1[3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
-  FunctionAux::calculateFlatNormal(speakerA1, speakerB1, speakerC1, speakerD1,
-                                   normal);
-  glTranslatef(0.47, 0.08, 0.8);
-  glScalef(0.1, 1.55, 0.7);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.1);
-  glPopMatrix();
-
-  //--------cube-------------
-
-  glColor3f(0.91, 0.91, 0.89);
-  glPushMatrix();
-  vertices = FunctionAux::calculateCubeFaceVertices(0.08, 0.47, 0.08, 0.8, 0.1,
-                                                    1.55, 0.7);
-  GLfloat cubeA[3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
-  GLfloat cubeB[3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
-  GLfloat cubeC[3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
-  GLfloat cubeD[3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
-  FunctionAux::calculateFlatNormal(cubeA, cubeB, cubeC, cubeD, normal);
-  glTranslatef(0.47, 0.4, 0.1);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.08);
-  glPopMatrix();
-
-  glColor3f(0.91, 0.91, 0.89);
-  vertices =
-      FunctionAux::calculateCubeFaceVertices(0.08, 0.47, 0.35, 0.2, 1, 1, 1);
-  GLfloat cubeA1[3] = {vertices[0][1], vertices[0][2], vertices[0][3]};
-  GLfloat cubeB1[3] = {vertices[1][1], vertices[1][2], vertices[1][3]};
-  GLfloat cubeC1[3] = {vertices[2][1], vertices[2][2], vertices[2][3]};
-  GLfloat cubeD1[3] = {vertices[3][1], vertices[3][2], vertices[3][3]};
-  FunctionAux::calculateFlatNormal(cubeA1, cubeB1, cubeC1, cubeD1, normal);
-  glPushMatrix();
-  glTranslatef(0.47, 0.35, 0.2);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.08);
-  glPopMatrix();
-}
 void drawRoom1() {
 
   glEnable(GL_LIGHT2); // Enable light source 2
@@ -741,9 +606,9 @@ void drawRoom1() {
 
   lines(); // Draw additional lines
 
-  //-------- Wall (Back) ----------------
-  glColor3f(0.69, 0.58, 0.56);                           // Wall color
-  GLfloat matSpecularWallBack[] = {0.69f, 0.58f, 0.56f}; // Wall specular
+  //-------- desenha a parede de trás do quarto ----------------
+  glColor3f(0.69, 0.58, 0.56);                           // cor
+  GLfloat matSpecularWallBack[] = {0.69f, 0.58f, 0.56f}; // iluminacao
   glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecularWallBack);
   glBegin(GL_POLYGON);          // Start back wall polygon
   GLfloat v4[] = {1, 0.5, -1};  // Vertex 4
@@ -751,13 +616,13 @@ void drawRoom1() {
   GLfloat v6[] = {-1, 0.5, -1}; // Vertex 6
   FunctionAux::calculateFlatNormal(v4, v5, v6, normal); // Calculate normal
   glNormal3f(normal[0], normal[1], normal[2]);          // Set normal
-  glVertex3f(1, 0.5, -1);                               // Vertex 4
-  glVertex3f(1, 0.0, -1);                               // Vertex 5
-  glVertex3f(-1, 0.0, -1);                              // Vertex 6
-  glVertex3f(-1, 0.5, -1);                              // Vertex 7
-  glEnd();                                              // End back wall polygon
+  glVertex3f(1, 0.5, -1);                              
+  glVertex3f(1, 0.0, -1);                              
+  glVertex3f(-1, 0.0, -1);                              
+  glVertex3f(-1, 0.5, -1);                             
+  glEnd();            
 
-  //---------- Wall (Right) -------------
+  //---------- desenha a parede da direita do quarto -------------
   glColor3f(0.69, 0.58, 0.56);                            // Wall color
   GLfloat matSpecularWallRight[] = {0.69f, 0.58f, 0.56f}; // Wall specular
   glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecularWallRight);
@@ -810,7 +675,7 @@ void drawRoom1() {
   GLfloat matSpecularWallBackG[] = {0.69, 0.58, 0.56};
   glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecularWallBackG);
 
-  // Draw first wall polygon
+  //Draw first wall polygon
   glBegin(GL_POLYGON);
   GLfloat v16[] = {1, 0.5, 1};                             // Vertex 1
   GLfloat v17[] = {1, 0.27, 1};                            // Vertex 2
@@ -1011,14 +876,7 @@ void drawRoom1() {
   glColor3f(0.53, 0.12, 0.12);
   GLfloat matSpeculardoortvWall[] = {0.53, 0.12, 0.12};
   glMaterialfv(GL_FRONT, GL_SPECULAR, matSpeculardoortvWall);
-
-  // Draw the TV wall as a scaled solid cube
-  glPushMatrix();
-  glTranslatef(0.74, 0.25, 0.5);
-  glScalef(5.1, 5, 9.99);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.1);
-  glPopMatrix();
+;
 
   //---------door------------
   // Calculate vertices for the door, normal vector is calculated for flat
@@ -1034,22 +892,6 @@ void drawRoom1() {
   FunctionAux::calculateFlatNormal(verticeE, verticeF, verticeG, verticeh,
                                    normal);
 
-  // Draw the door frame as a scaled solid cube
-  glPushMatrix();
-  glTranslatef(0.74, 0.18, -0.005);
-  glScalef(2, 3.5, 0.2);
-  glNormal3f(normal[0], normal[1], normal[2]);
-  glutSolidCube(0.1);
-  glPopMatrix();
-
-  // Draw the door with a different color and slightly larger dimensions
-  glColor3f(0.47, 0.35, 0.26);
-  glPushMatrix();
-  glTranslatef(0.74, 0.18, 0.0);
-  glScalef(2.1, 3.6, 0.2);
-  glutSolidCube(0.1);
-  glPopMatrix();
-
   //---------roof lamp------------
   // Draw a torus-shaped roof lamp
   glColor3f(1.0, 1.0, 1.0);
@@ -1062,7 +904,6 @@ void drawRoom1() {
   // Call functions to render other objects (walls, box, wardrobe, sofa)
   redwall();
   greywall();
-  box();
   wardrobe();
   sofa();
 
